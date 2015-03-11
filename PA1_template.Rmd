@@ -76,16 +76,22 @@ The impact of imputing missing data on the estimates of the total daily number o
 ##Are there differences in activity patterns between weekdays and weekends?
 1. Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 ```{r}
-library(ggplot2)
 completedata$date <-as.Date(completedata$date)
-weekdayssub <- completedata[weekdays(completedata$date)!="Saturday" & weekdays(completedata$date)!="Sunday", c(1:3)]
-weekdaysavg <- aggregate(weekdayssub$steps,by=list(weekdayssub$interval),mean)
-colnames(weekdaysavg) <- c("interval", "steps")
-weekendsub <-completedata[weekdays(completedata$date)=="Saturday" | weekdays(completedata$date)=="Sunday", c(1:3)]
-weekendavg <-aggregate(weekendsub$steps,by=list(weekendsub$interval),mean)
-colnames(weekendavg) <- c("interval", "steps")
-ggplot(weekdaysavg,aes(interval,steps))+geom_line()+ggtitle("Weekday")
-ggplot(weekendavg,aes(interval,steps))+geom_line()+ggtitle("Weekend")
+f<-weekdays(completedata$date)=="Saturday" | weekdays(completedata$date)=="Sunday"
+f<-as.array(f)
+f[f]="weekend"
+f[f==FALSE]="weekday"
+f=as.factor(f)
+completedata=cbind(completedata,f)
+
+```
+
+2.Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
+```{r}
+library(lattice)
+meansteps <- aggregate(completedata$steps, by=list(completedata$interval, completedata$f), mean)
+colnames(meansteps) <- c("interval","f","steps")
+xyplot(steps ~ interval|f,data=meansteps,layout=c(1,2),type="l")
 ```
 
 

@@ -59,9 +59,10 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div id="loading-and-preprocessing-the-data" class="section level2">
 <h2>Loading and preprocessing the data</h2>
 <ol style="list-style-type: decimal">
-<li>Load the data (assuming the current working directory is already set to the directory containing the data file)</li>
+<li>Load the data (assuming the current working directory is already set to the directory containing the zip file “activity.zip”)</li>
 </ol>
-<pre class="r"><code>origindata &lt;- read.csv(&quot;activity.csv&quot;)</code></pre>
+<pre class="r"><code>unzip(&quot;activity.zip&quot;)
+origindata &lt;- read.csv(&quot;activity.csv&quot;)</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Process/transform the data (if necessary) into a format suitable for your analysis</li>
 </ol>

@@ -14,7 +14,7 @@ origindata <- read.csv("activity.csv")
 newdata <-na.omit(origindata)
 ```
 
-##What is mean total number of steps taken per day?newdata$date
+##What is mean total number of steps taken per day?
 1. Make a histogram of the total number of steps taken each day
 
 ```r
